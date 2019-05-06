@@ -1,0 +1,246 @@
+<div *ngIf="isvalid">
+  <div class="jumbotron">
+    <div class="container login-container">
+      <div class="row">
+        <div class="col-md-6">
+
+          <form [formGroup]="employeeform">
+            <div class="row form-group">
+              <div class="col-md-4">
+                <label class="control-label">Employee Name:</label>
+              </div>
+              <div class="col-md-6">
+                <input type="text" formControlName="name" class="form-control" [readonly]="isReadOnly"
+                [ngModel]="emptyarray.name" (ngChange)="onChange($event)"
+                
+                  [ngClass]="{ 'is-invalid': submitted && f.name.errors }" required>
+             
+                <div *ngIf="employeeform.controls['name'].invalid && (employeeform.controls['name'].dirty || employeeform.controls['name'].touched)">
+                  <div *ngIf="employeeform.controls['name'].errors.required">
+                  Name Field is required.
+                </div>
+              </div>
+            </div>
+            </div>
+           
+
+            <div class="row form-group">
+              <div class="col-md-4">
+                <label class="control-label">Qualification </label>
+              </div>
+              <div class="col-md-6">
+                <select class="form-control" id="education" formControlName="education" name="education"
+                  [(ngModel)]="emptyarray.education" required>
+                  <option *ngFor="let k of educationlist" [ngValue]="k.code">
+                    {{k.code}}
+                  </option>
+                </select>
+                <div *ngIf="employeeform.controls['education'].invalid && (employeeform.controls['education'].dirty || employeeform.controls['education'].touched)">
+                    <div *ngIf="employeeform.controls['education'].errors.required">
+                    Education Field is required.
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <br>
+
+
+            <div class="row form-group">
+              <div class="col-md-4">
+                <label class="control-label">Designation:</label>
+              </div>
+              <div class="col-md-6">
+                <input type="text" formControlName="designation" class="form-control"
+                  [readonly]="isReadOnly" [(ngModel)]="emptyarray.designation" required>
+             
+              <div *ngIf="employeeform.controls['designation'].invalid && (employeeform.controls['designation'].dirty || employeeform.controls['designation'].touched)">
+                  <div *ngIf="employeeform.controls['designation'].errors.required">
+                  Designation Field is required.
+                </div>
+              </div>
+            </div>
+            </div>
+
+            <div class="row form-group">
+              <div class="col-md-4">
+                <label class="control-label">City:</label>
+              </div>
+              <div class="col-md-6"><input type="text" formControlName="city" class="form-control"
+                  [readonly]="isReadOnly" [(ngModel)]="emptyarray.city" required>
+              
+              <div *ngIf="employeeform.controls['city'].invalid && (employeeform.controls['city'].dirty || employeeform.controls['city'].touched)" >
+                  <div *ngIf="employeeform.controls['city'].errors.required">
+                  City Field is required.
+                </div>
+              </div>
+            </div>
+
+            </div>
+
+
+            <div class="row form-group">
+              <div class="col-md-4">
+                <label>Gender:</label>
+              </div>
+              <label class="radio-inline">
+                <input type="radio" value="Male" name="gender" formControlName="gender"> Male
+              </label>
+              <br>
+              <label class="radio-inline">
+                <input type="radio" value="Female" name="gender" formControlName="gender"> Female
+              </label>
+            </div>
+
+
+            <div class="row form-group">
+              <div class="col-md-4">
+                <label class="control-label">Joining Date</label>
+              </div>
+              <div class="col-md-6">
+                <input type="date" id="doj" placeholder="select date" formControlName="doj"
+                  [(ngModel)]="emptyarray.doj" required>
+             
+
+              <div *ngIf="employeeform.controls['doj'].invalid && (employeeform.controls['doj'].dirty || employeeform.controls['doj'].touched)">
+                  <div *ngIf="employeeform.controls['doj'].errors.required">
+                  Date Field is required.
+                </div>
+              </div>
+              </div>
+            </div>
+
+
+
+            <div class="row form-group">
+              <div class="col-md-4"><label>Salary:</label></div>
+              <div class="col-md-6"><input type="number" formControlName="salary" class="form-control"
+                  [readonly]="isReadOnly" [(ngModel)]="emptyarray.salary"></div>
+            </div>
+
+
+            <div class="row">
+              <div class="col-md-4"><button type="button" class="btn btn-primary btn-sm" [hidden]="isButtonhide"
+                  (click)="buttonvalue()">{{setbutton}}</button></div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-4">
+                <button type="button" class="btn btn-secondary btn-sm" (click)="back()"
+                  [hidden]="backbttnhide">Back</button>
+              </div>
+            </div>
+           </form>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="!isvalid">
+  <div class="jumbotron">
+    <div class="container login-container">
+      <div class="row">
+        <div class="col-md-6">
+
+          <form [formGroup]="employeeform">
+            <div class="row form-group">
+
+              <div class="col-md-4">
+                <label>Employee Name:</label>
+              </div>
+              <div class="col-md-6"><input type="text" formControlName="name" class="form-control"
+                  [readonly]="isReadOnly" [(ngModel)]="newemp.name">
+              </div>
+           </div>
+
+            <div class="row form-group">
+              <div class="col-md-4">
+                <label>Qualification </label>
+              </div>
+              <div class="col-md-6">
+                <input type="text" [(ngModel)]="newemp.education" formControlName="education" [readonly]="isReadOnly"
+                  class="form-control">
+
+              </div>
+            </div>
+            <br>
+
+
+            <div class="row form-group">
+              <div class="col-md-4">
+                <label>Designation:</label>
+              </div>
+              <div class="col-md-6"><input type="text" formControlName="designation" class="form-control"
+                  [readonly]="isReadOnly" [(ngModel)]="newemp.designation">
+              </div>
+
+            </div>
+
+            <div class="row form-group">
+              <div class="col-md-4">
+                <label>City:</label>
+              </div>
+              <div class="col-md-6"><input type="text" formControlName="city" class="form-control"
+                  [readonly]="isReadOnly" [(ngModel)]="newemp.city">
+              </div>
+
+            </div>
+
+
+            <div class="row form-group">
+              <div class="col-md-4">
+                <label>Gender</label>
+              </div>
+              <div class="col-md-6">
+                <input type="text" formControlName="gender" class="form-control" [readonly]="isReadOnly"
+                  [(ngModel)]="newemp.gender">
+
+              </div>
+            </div>
+
+
+            <div class="row form-group">
+              <div class="col-md-4">
+                <label>Joining Date</label>
+              </div>
+              <div class="col-md-6"> <input type="date" formControlName="doj" class="form-control" name="doj"
+                  [ngModel]="newemp.doj | date:'yyyy-MM-dd'" [readonly]="isReadOnly">
+              </div>
+
+            </div>
+
+
+
+            <div class="row form-group">
+              <div class="col-md-4"><label>Salary:</label></div>
+              <div class="col-md-6"><input type="number" formControlName="salary" class="form-control"
+                  [readonly]="isReadOnly" [(ngModel)]="newemp.salary">
+                </div>
+            </div>
+
+
+            <div class="row">
+              <div class="col-md-4"><button type="button" class="btn btn-primary btn-sm" [hidden]="isButtonhide"
+                  (click)="buttonvalue()">{{setbutton}}</button>
+                </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-4">
+                <button type="button" class="btn btn-secondary btn-sm" (click)="back()"
+                  [hidden]="backbttnhide">Back</button>
+              </div>
+            </div>
+
+
+          </form>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--  [(ngModel)]="emptyarray.name"-->

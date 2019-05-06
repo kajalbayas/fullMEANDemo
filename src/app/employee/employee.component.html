@@ -1,0 +1,98 @@
+
+
+ <div class="container">
+<br>
+<br>
+<div class="col">
+    <div class="col-md-4">
+  <input type="text"  [(ngModel)]="searchText" placeholder="serach here">
+ </div>
+</div>
+ <br>
+ <br>
+ 
+
+ <div class="row">
+    <div class="col-md-8">
+        <div class="col-md-4">
+        <button type="button" class="btn btn-secondary btn-sm RbtnMargin"  (click)="getnavigate()"><i class="fa fa-plus" aria-hidden="true"></i>Add New Employee </button>
+    </div>
+   </div>
+  </div>
+ <br>
+ <br>
+ <br>
+ 
+<div class="container">
+  <div class="row">
+    <div class="col-md-4">
+   
+      <table class="table table-stripped">
+        <thead class="thead-light">
+          <th style="width: 30%">ID:</th>
+          <th  style="width: 30%" (click)="sort('name')">Name <i class="fa" [ngClass]="{'fa-sort': column != 'name', 
+                            'fa-sort-asc': (column == 'name' && isDesc), 
+                            'fa-sort-desc': (column == 'name' && !isDesc) }" aria-hidden="true"></i></th>
+      
+          <th style="width:30%" (click)="sort('designation')">Profile<i class="fa" [ngClass]="{'fa-sort': column != 'designation', 
+                            'fa-sort-asc': (column == 'designation' && isDesc), 
+                            'fa-sort-desc': (column == 'designation' && !isDesc) }" aria-hidden="true"></i></th>
+      
+          <th style="width: 30%">Education </th>
+          <th style="width: 30%" (click)="sort('city')">City<i class="fa" [ngClass]="{'fa-sort': column != 'city', 
+                              'fa-sort-asc': (column == 'city' && isDesc), 
+                              'fa-sort-desc': (column == 'city' && !isDesc) }" aria-hidden="true"></i></th>
+      
+      
+          <th style="width: 30%">Gender</th>
+          <th style="width: 30%">Date_Of_Joining</th>
+          <th style="width: 30%" (click)="sort('salary')">Salary<i class="fa" [ngClass]="{'fa-sort': column != 'salary', 
+                            'fa-sort-asc': (column == 'salary' && isDesc), 
+                            'fa-sort-desc': (column == 'salary' && !isDesc) }" aria-hidden="true"></i></th>
+      
+      
+      
+          <th style="width: 30%">Created At :</th>
+          <th style="width: 30%">Modified On :</th>
+
+
+        </thead>
+      
+       
+        <tbody>
+          <tr *ngFor="let empdetails of(emp|search: {name: searchText, city: searchText,  designation: searchText}|sorting:{property:column,direction:direction});let i=index" appColor [pricerange]="empdetails.salary">
+       
+            <td>{{i}}</td>
+            <td>{{empdetails.name | uppercase}}</td>
+            <td>{{empdetails.designation| uppercase}}</td>
+            <td>{{empdetails.education}}</td>
+            <td>{{empdetails.city | uppercase}}</td>
+            <td>{{empdetails.gender|uppercase}}</td>
+            <td>{{empdetails.doj|date}}</td>
+            <td>{{empdetails.salary|currency:'Rs '}}</td>
+            
+            
+            <td>{{empdetails.created_at}}</td>
+            <td>{{empdetails.updated_at}}</td>
+          
+             <td>
+               <button type="button" class="btn btn-secondary btn-sm" (click)="getviewdeatils(empdetails._id)"><i class="fa fa-list" aria-hidden="true"></i>View</button>
+             </td>
+             <td>
+               <button type="button" class="btn btn-secondary btn-sm" (click)="edit(empdetails._id)"> <i class="fa fa-pencil fa-fw"></i>Edit</button>
+            </td>
+             <td>
+                <button type="button" class="btn btn-secondary btn-sm" (click)="delete(empdetails._id,index)"><i class="fa fa-trash-o fa-lg"></i>Delete</button>
+              </td>
+              </tr>
+         </tbody>
+   
+  </table>
+  
+  </div>
+</div>
+</div>
+
+</div>
+  
+<router-outlet></router-outlet>
