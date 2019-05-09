@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import {AngularFontAwesomeModule} from 'angular-font-awesome';
+import {DatePipe} from '@angular/common';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -14,7 +15,7 @@ import { HomeComponent } from './home/home.component';
   declarations: [
     AppComponent,
     UserComponent,
-    HomeComponent
+    HomeComponent  
     //EmployeeComponent
   ],
   imports: [
@@ -22,9 +23,11 @@ import { HomeComponent } from './home/home.component';
     AppRoutingModule,
     EmployeeModule,
     HttpClientModule,
-    AngularFontAwesomeModule
+    AngularFontAwesomeModule,
+    
+
   ],
-  providers: [],
+  providers: [DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

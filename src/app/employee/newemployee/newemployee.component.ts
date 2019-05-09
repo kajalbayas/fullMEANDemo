@@ -4,6 +4,8 @@ import { EmpserviceService } from '../empservice.service';
 import { FormGroup, FormControl, FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { DISABLED } from '@angular/forms/src/model';
+import { getNgModuleDef } from '@angular/core/src/render3/definition';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-newemployee',
@@ -27,7 +29,8 @@ export class NewemployeeComponent implements OnInit
   isButtonhide: boolean;
   urlid: any = '';
   emptyarray:Empmodel={};
-  isvalid:boolean;
+  isvalid:boolean=true;
+ date:any;
   
 
   educationlist=[
@@ -50,12 +53,12 @@ export class NewemployeeComponent implements OnInit
   },
 ]
 
-genderList = [{ value: 1, text: "Male", selected: "checked" }, { value: 2, text: "Female", selected: "" }];
+genderList = [{  name: "Male", value:"male" ,selected: "checked" }, { name: "Female",value:"female" }];
   
 
 
   constructor(private formbuilder: FormBuilder, private router: Router, private empservice: EmpserviceService,
-    private activatedroute: ActivatedRoute) {
+    private activatedroute: ActivatedRoute,private datepipe:DatePipe) {
 
   }
 
@@ -86,7 +89,7 @@ genderList = [{ value: 1, text: "Male", selected: "checked" }, { value: 2, text:
 
   saveOrUpdate(employeeform): void 
   {
-    debugger; 
+    
     
     this.submitted = true;
     let formdata = employeeform.getRawValue();
@@ -113,18 +116,33 @@ genderList = [{ value: 1, text: "Male", selected: "checked" }, { value: 2, text:
   update(employeeform): void 
   {
      console.log(employeeform);
+     let formdata = employeeform.getRawValue();
     this.urlid = this.activatedroute.snapshot.url[1].path;
-    this.empservice.updateempdetails(this.newemp, this.urlid).subscribe(
-      (data: any) => 
-      {
-        console.log(data);
-        this.router.navigate(['emp']);
-      })
-  }
+    this.newemp=formdata;
+
+    
+    if (this.employeeform.invalid) 
+    {
+      return;
+    }
+
+    else
+    {
+      this.empservice.updateempdetails(this.newemp, this.urlid).subscribe(
+        (data: any) => 
+        {
+          console.log(data);
+          this.router.navigate(['emp']);
+        })
+   
+    }
+     }
 
   buttonvalue(): void 
   {
 
+    
+     
     if (this.setbutton === 'Update')
     {
      
@@ -138,46 +156,32 @@ genderList = [{ value: 1, text: "Male", selected: "checked" }, { value: 2, text:
 
   }
 
-
+ 
 
   getparams(employeeid): void
    {
-    this.newemp = this.activatedroute.snapshot.data['emplist'];
+     this.newemp = this.activatedroute.snapshot.data['emplist'];
+     var resdate=this.newemp.doj;
+     this.date =this.datepipe.transform(resdate,'yyyy-MM-dd');
+
     
-
-    this.empservice.getemployeedetailsbyid(employeeid).subscribe(
-      (data: any) => 
-      {
-        
-        console.log('fetched data' + data);
-        this.newemp =data
-
-     })
-     this.setvalue();
-  }
-
-
-  
-  
-  setvalue():void
-  {
-      this.employeeform.setValue({
-         
-      name:this.newemp.name,
-      city: this.newemp.city,
-      designation:this.newemp.designation,
-      salary:this.newemp.salary,
-      education:this.newemp.education,
-      gender:this.newemp.gender,
-      doj:this.newemp.doj
-
-    })
-      console.log(name);
-  }
+     this.employeeform.patchValue(
+       {
+        name:this.newemp.name,
+        city:this.newemp.city,
+        designation:this.newemp.designation,
+        salary:this.newemp.salary,
+        education:this.newemp.education,
+        gender:this.newemp.gender,
+        doj:this.date
+       }
+     )
+   
+   
+    }
 
 
-
-  back(): void 
+ back(): void 
   {
     this.router.navigate(['emp']);
   }
@@ -211,22 +215,21 @@ genderList = [{ value: 1, text: "Male", selected: "checked" }, { value: 2, text:
 
       this.employeeid = params['id'];
       console.log('selected id' + this.employeeid);
-      this.getparams(this.employeeid);
+    
 
       if (this.urlpath === "viewemp" ) 
       {
+        this.isvalid=false;
         this.isButtonhide = true;
         this.isReadOnly = true;
         this.backbttnhide = false;
+        this.getparams(this.employeeid);
       }
       if (this.urlpath === "newemp" || this.urlpath=="editemp") 
       {
         this.isvalid=true;  
-        if(this.urlpath=="editemp")
-        {
-          
-          this.setvalue();
-        }
+        this.getparams(this.employeeid);
+       
        
       }
 

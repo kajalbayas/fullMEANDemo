@@ -10,10 +10,7 @@
                 <label class="control-label">Employee Name:</label>
               </div>
               <div class="col-md-6">
-                <input type="text" formControlName="name" class="form-control" [readonly]="isReadOnly"
-                [ngModel]="emptyarray.name" (ngChange)="onChange($event)"
-                
-                  [ngClass]="{ 'is-invalid': submitted && f.name.errors }" required>
+                <input type="text" formControlName="name" class="form-control" [readonly]="isReadOnly" [ngClass]="{ 'is-invalid': submitted && f.name.errors }" required>
              
                 <div *ngIf="employeeform.controls['name'].invalid && (employeeform.controls['name'].dirty || employeeform.controls['name'].touched)">
                   <div *ngIf="employeeform.controls['name'].errors.required">
@@ -30,7 +27,7 @@
               </div>
               <div class="col-md-6">
                 <select class="form-control" id="education" formControlName="education" name="education"
-                  [(ngModel)]="emptyarray.education" required>
+                  required>
                   <option *ngFor="let k of educationlist" [ngValue]="k.code">
                     {{k.code}}
                   </option>
@@ -52,7 +49,7 @@
               </div>
               <div class="col-md-6">
                 <input type="text" formControlName="designation" class="form-control"
-                  [readonly]="isReadOnly" [(ngModel)]="emptyarray.designation" required>
+                  [readonly]="isReadOnly"  required>
              
               <div *ngIf="employeeform.controls['designation'].invalid && (employeeform.controls['designation'].dirty || employeeform.controls['designation'].touched)">
                   <div *ngIf="employeeform.controls['designation'].errors.required">
@@ -67,7 +64,7 @@
                 <label class="control-label">City:</label>
               </div>
               <div class="col-md-6"><input type="text" formControlName="city" class="form-control"
-                  [readonly]="isReadOnly" [(ngModel)]="emptyarray.city" required>
+                  [readonly]="isReadOnly"  required>
               
               <div *ngIf="employeeform.controls['city'].invalid && (employeeform.controls['city'].dirty || employeeform.controls['city'].touched)" >
                   <div *ngIf="employeeform.controls['city'].errors.required">
@@ -77,18 +74,21 @@
             </div>
 
             </div>
+            
+          
+         
+           
 
-
-            <div class="row form-group">
+           <div class="row form-group">
               <div class="col-md-4">
                 <label>Gender:</label>
               </div>
               <label class="radio-inline">
-                <input type="radio" value="Male" name="gender" formControlName="gender"> Male
+                <input type="radio" checked="{{newemp.gender==='male'}} " value="Male" name="gender" formControlName="gender" > Male
               </label>
               <br>
               <label class="radio-inline">
-                <input type="radio" value="Female" name="gender" formControlName="gender"> Female
+                <input type="radio" value="Female" checked="{{newemp.gender==='female'}}" name="gender" formControlName="gender"> Female
               </label>
             </div>
 
@@ -98,8 +98,7 @@
                 <label class="control-label">Joining Date</label>
               </div>
               <div class="col-md-6">
-                <input type="date" id="doj" placeholder="select date" formControlName="doj"
-                  [(ngModel)]="emptyarray.doj" required>
+                <input type="date" id="doj" placeholder="select date" formControlName="doj" required>
              
 
               <div *ngIf="employeeform.controls['doj'].invalid && (employeeform.controls['doj'].dirty || employeeform.controls['doj'].touched)">
@@ -115,7 +114,7 @@
             <div class="row form-group">
               <div class="col-md-4"><label>Salary:</label></div>
               <div class="col-md-6"><input type="number" formControlName="salary" class="form-control"
-                  [readonly]="isReadOnly" [(ngModel)]="emptyarray.salary"></div>
+                  [readonly]="isReadOnly" ></div>
             </div>
 
 
@@ -126,11 +125,12 @@
 
             <div class="row">
               <div class="col-md-4">
-                <button type="button" class="btn btn-secondary btn-sm" (click)="back()"
+                <button type="button" class="btn btn-secondary btn-sm" (click)="back()" 
                   [hidden]="backbttnhide">Back</button>
               </div>
             </div>
-           </form>
+           
+          </form>
 
         </div>
       </div>
@@ -206,7 +206,7 @@
                 <label>Joining Date</label>
               </div>
               <div class="col-md-6"> <input type="date" formControlName="doj" class="form-control" name="doj"
-                  [ngModel]="newemp.doj | date:'yyyy-MM-dd'" [readonly]="isReadOnly">
+                  [(ngModel)]="date" [readonly]="isReadOnly">
               </div>
 
             </div>
